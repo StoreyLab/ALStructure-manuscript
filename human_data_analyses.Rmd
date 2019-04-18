@@ -12,11 +12,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-In this document, we detail the procedures used to analyze the human datasets studied in _A likelihood-free estimator of population structure bridging admixture models and principal components analysis_ (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>) 
+In this document, we detail the procedures used to analyze the human datasets studied in Cabreros and Storey, 2018 (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>).
 
 ## Data acquisition
 
-The cleaned datasets used in the 
+There are four human datasets analyzed in this work: 
+
+1. TGP (1000 Genomes Project) [@TGP]
+2. HGDP (Human Genome Diversity Project) [@HGDP]
+3. HO (Human Origins) [@HO]
+4. IND (India) [@basu]
+
+The TGP, HGDP, and HO datasets are publically available, while the 
 
 
 ```{r cars}
@@ -32,3 +39,4 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
