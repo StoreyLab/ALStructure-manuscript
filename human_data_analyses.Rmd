@@ -10,9 +10,9 @@ bibliography: refs.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Summary
 
-In this document, we detail the procedures used to analyze the human datasets studied in Cabreros and Storey, 2018 (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>).
+In this document we detail the steps used to analyze the human datasets studied in Cabreros and Storey 2018 (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>). All referenced files can be found in the public `GitHub` repository: <https://github.com/StoreyLab/alstructure_paper>. 
 
 ## Data acquisition
 
@@ -23,20 +23,39 @@ There are four human datasets analyzed in this work:
 3. HO (Human Origins) [@HO]
 4. IND (India) [@basu]
 
-The TGP, HGDP, and HO datasets are publically available, while the 
+The TGP, HGDP, and HO datasets are publically available, while the the IND dataset is not. For the publically available datasets, we have included the exact data analyzed throughout Cabreros and Storey 2018 in the `GitHub` repository: <https://github.com/StoreyLab/alstructure_paper/tree/master/data>. The filtering done to obtain these datasets is detailed in Cabreros and Storey 2018. The IND dataset must be obtained from the authors of [@basu]. In the same `GitHub` directory containing the publically available datasets, we have included the script used to filter the IND dataset: `clean_IND.R`. Someone trying to reproduce our results will need to first obtain the IND dataset and then run `clean_IND.R`. 
 
+## Method acquisition
 
-```{r cars}
-summary(cars)
+There are four methods compared in this work:
+
+1. `Admixture` [@admixture]
+2. `fastSTRUCTURE` [@fast]
+3. `terastructure` [@tera]
+4. `ALStructure` (Cabreros and Storey 2018)
+
+The `Admixture` software can be obtained from <http://software.genetics.ucla.edu/admixture/publications.html>. The `fastSTRUCTURE` software can be obtained from <https://rajanil.github.io/fastStructure/>. The `terastructure` software can be obtained from <https://github.com/StoreyLab/terastructure>. The `ALStructure` software is an `R` package, which can be obtained by executing the following commands into an `R` console:
+
+```{r, eval = FALSE}
+library("devtools")
+install_github("storeylab/alstructure", build_vignettes=TRUE)
 ```
 
-## Including Plots
+## Original dataset fits
 
-You can also embed plots, for example:
+Each of the four datasets (TGP, HGDP, HO, and IND) are first fit by each of the four methods (`Admixture`, `fastSTRUCTURE`, `terastructure`, and `ALStructure`). Each of these 16 total fits were obtained by running the script: `/scripts/original_data_fits.R`. 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+This script assumes 16 parallel jobs are being submitted to a server through a `.slurm` script with array indices 1-16. The array index `AI` is read, which specifies the particular dataset and method used. Running these jobs in parallel is highly recommended, as some of the individual fits required several days or weeks.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Simulating datasets from original dataset fits
+In order to assess the performace of each method on human data, we compare their performance on datasets simulated from the fitted model parameters obtained in the previous section by evaluating `/scripts/original_data_fits.R` (this is described in greater detail in Cabreros and Storey 2018). We produce and store the datasets by running the script: `/scripts/simulate_datasets.R`. 
 
+This script assumes $k$ parallel jobs are being submitted to a server through a `.slurm` script with array indices 1-$k$. The array index `AI` is read, which specifies replication ID of the datasets produced. In Cabreros and Storey 2018, there were four different replicate datasets produced for each method-dataset pair ($k = 4$), and we excluded the IND dataset. The output `/scripts/original_data_fits.R` is therefore $3 \text{(number of methods)} \times 4 \text{(number of datasets)} \times 4 \text{(number of replications)} = 48$ total simulated datasets. 
+
+## Fitting simulated datasets
+
+Each of the 48 simulated datasets produced by `/scripts/simulate_datasets.R` are then fitted by each of the four methods, using the script `/scripts/fit_simulated_datasets.R`. This produces $48 \text{(number of simulated datasets)} \times 4 \text{(number of methods)} = 192$ total model fits. 
+
+This script assumes 192 parallel jobs are being submitted to a server through a `.slurm` script with array indices 1-192. The array index `AI` is read, which specifies the particular dataset and method used. Running these jobs in parallel is highly recommended, as some of the individual fits required several days or weeks.
+
+## References
