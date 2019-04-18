@@ -1,0 +1,34 @@
+---
+title: "Human dataset analysis details"
+author: "Irineo Cabreros and John D. Storey"
+date: "4/18/2019"
+output: pdf_document
+bibliography: refs.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+In this document, we detail the procedures used to analyze the human datasets studied in _A likelihood-free estimator of population structure bridging admixture models and principal components analysis_ (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>) 
+
+## Data acquisition
+
+The cleaned datasets used in the 
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
