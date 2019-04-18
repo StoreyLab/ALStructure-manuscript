@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Summary
 
-In this document we detail the steps used to analyze the human datasets studied in Cabreros and Storey 2018 (<https://www.biorxiv.org/content/early/2019/03/27/240812.full.pdf>). All referenced files can be found in the public `GitHub` repository: <https://github.com/StoreyLab/alstructure_paper>. 
+In this document we detail the steps used to analyze the human datasets studied in Cabreros and Storey 2018 (<https://dx.doi.org/10.1101/240812>). All referenced files can be found in the public `GitHub` repository: <https://github.com/StoreyLab/alstructure_paper>. 
 
 ## Data acquisition
 
