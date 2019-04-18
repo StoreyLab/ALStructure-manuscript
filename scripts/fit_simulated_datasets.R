@@ -11,6 +11,13 @@ out_dir <- "/path/to/simulated_fits/"
 true_dir <- "/path/to/original_fits/"
 data_dir <- "/path/to/simulated/datasets/"
 write_file <- paste0(out_dir, "all_vals.txt")
+
+######################
+# Method Directories #
+######################
+adx_dir <- "/path/to/admixture/software/admixture"
+fs_dir <- "/path/to/faststructure/software/structure.py"
+ts_dir <- "/path/to/terastructure/software/terastructure"
   
 # k, m, and n values
 ks <- c(8, 10, 14)
@@ -83,7 +90,7 @@ if(fit2_method == "adx"){
   # output and execution strings
   fit_str <- paste0(out_dir, "ADX_", fit1_method, "_", fit2_method, "_", dataset, "_", repetition)
   str_ad_out <- paste0(fit_str, ".out")
-  str_ad_exec <- paste0("/Genomics/grid/users/cabreros/FPQ/admixture/admixture_linux-1.3.0/admixture ", data_dir, temp_data_str, ".bed ", k, " > ", str_ad_out)
+  str_ad_exec <- paste0(adx_dir, " ", data_dir, temp_data_str, ".bed ", k, " > ", str_ad_out)
   
   # execute ADX
   print("ADX execution")
@@ -148,7 +155,7 @@ if (fit2_method == "fs"){
   
   # output and execution strings
   str_fs_out <- paste0(out_dir, "FS_", fit1_method, "_", fit2_method, "_", dataset, "_", repetition)
-  str_fs_exec <- paste0("python2.7 /Genomics/grid/users/cabreros/FPQ/fastStructure-master/structure.py -K ", k, " --input=", data_dir, temp_data_str, " --out=", str_fs_out)
+  str_fs_exec <- paste0("python2.7 ", fs_dir, " -K ", k, " --input=", data_dir, temp_data_str, " --out=", str_fs_out)
   print(str_fs_exec)
   
   # execute FS
@@ -214,8 +221,8 @@ if(fit2_method == "ts"){
   
   # output and execution strings
   str_ts_dir <- paste0("./n", n, "-k", k, "-l", m, "-", fit1_method, "-", fit2_method, "-", dataset, "-", repetition)
-  str_ts_exec <- paste0("/Genomics/grid/users/cabreros/FPQ/terastructure/terastructure-master/src/terastructure -file ", data_dir, temp_data_str, ".bed -n ", n, " -l ", m, " -k ", k, " -stochastic -rfreq 10000 -force -label ", fit1_method, "-", fit2_method, "-", dataset, "-", repetition)
-  str_ts_beta_run <- paste0("/Genomics/grid/users/cabreros/FPQ/terastructure/terastructure-master/src/terastructure -file ", data_dir, temp_data_str, ".bed -locations-file ", locations_dir, " -n ", n, " -l ", m ," -k ", k, " -stochastic -label ", fit1_method, "-", fit2_method, "-", dataset, "-", repetition, "-beta -compute-beta")
+  str_ts_exec <- paste0(ts_dir, " -file ", data_dir, temp_data_str, ".bed -n ", n, " -l ", m, " -k ", k, " -stochastic -rfreq 10000 -force -label ", fit1_method, "-", fit2_method, "-", dataset, "-", repetition)
+  str_ts_beta_run <- paste0(ts_dir, " -file ", data_dir, temp_data_str, ".bed -locations-file ", locations_dir, " -n ", n, " -l ", m ," -k ", k, " -stochastic -label ", fit1_method, "-", fit2_method, "-", dataset, "-", repetition, "-beta -compute-beta")
   
   # execute TS
   print("TS execution")
